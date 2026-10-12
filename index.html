@@ -13,8 +13,7 @@
   <section id="login-screen" class="login-screen">
     <div class="login-art">
       <a class="logo" href="#">crave<span>.</span></a>
-      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80"
-           alt="Burger">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="Burger">
       <h2>Good food.<br><em>Good mood.</em></h2>
       <p>Fresh picks. Happy bites. Right at your door.</p>
     </div>
@@ -24,7 +23,7 @@
       <h1>Your next meal<br>starts here.</h1>
       <p>Sign in to explore your favourite food.</p>
 
-      <button id="google-login" class="google-btn">
+      <button id="google-login" class="google-btn" type="button">
         <strong>G</strong> Continue with Google
       </button>
 
@@ -38,12 +37,13 @@
                  pattern="[0-9]{10}" inputmode="numeric"
                  placeholder="10-digit mobile number" required>
         </div>
-        <button class="primary-btn full">Continue with phone →</button>
+        <button class="primary-btn full" type="submit">
+          Continue with phone →
+        </button>
       </form>
 
       <p class="small-note">
-        Demo login only. Real Google authentication and OTP verification
-        are not connected.
+        Demo login only. Real Google authentication and OTP are not connected.
       </p>
       <p class="creator">Created by <strong>MOHAMED NOWFAL</strong></p>
     </div>
@@ -53,20 +53,27 @@
   <div id="app" class="hidden">
     <header class="navbar">
       <a class="logo" href="#">crave<span>.</span></a>
+
       <nav>
         <a href="#restaurants">Restaurants</a>
         <a href="#offers">Offers</a>
         <a href="#how-it-works">How it works</a>
       </nav>
+
       <div class="nav-actions">
-        <button id="profile-button">👤 <span id="profile-label">Foodie</span></button>
-        <button id="open-cart">🛍️ Cart (<span id="cart-count">0</span>)</button>
+        <button id="profile-button" type="button">
+          👤 <span id="profile-label">Foodie</span>
+        </button>
+        <button id="open-cart" type="button">
+          🛍️ Cart (<span id="cart-count">0</span>)
+        </button>
       </div>
     </header>
 
     <section class="welcome">
       <span class="eyebrow">YOUR NEXT MEAL STARTS HERE</span>
-      <h1>Hey <span id="welcome-name">Foodie</span>, what are you <em>craving?</em></h1>
+      <h1>Hey <span id="welcome-name">Foodie</span>,
+        what are you <em>craving?</em></h1>
       <p>Discover local restaurants and delicious food.</p>
     </section>
 
@@ -74,11 +81,10 @@
       <div>
         <span class="eyebrow">GOOD FOOD, GOOD MOOD</span>
         <h2>Your favourite food is <em>right here.</em></h2>
-        <p>Choose a restaurant, explore the menu, and build your order.</p>
+        <p>Choose a restaurant, explore its menu, and build your order.</p>
         <a href="#restaurants" class="primary-btn">Explore restaurants ↗</a>
       </div>
-      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"
-           alt="Delicious burger">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Delicious burger">
     </section>
 
     <section class="offer" id="offers">
@@ -90,6 +96,7 @@
       <span class="offer-emoji">🍔 🍟</span>
     </section>
 
+    <!-- RESTAURANTS -->
     <section id="restaurants" class="restaurants">
       <span class="eyebrow">HANDPICKED FOR YOU</span>
       <h2>Restaurants near you</h2>
@@ -98,40 +105,70 @@
              placeholder="Search restaurants or dishes...">
 
       <div class="filters" id="filters">
-        <button class="active" data-category="All">🍽️ All food</button>
-        <button data-category="South Indian">🥘 South Indian</button>
-        <button data-category="Burgers">🍔 Burgers</button>
-        <button data-category="Pizza">🍕 Pizza</button>
-        <button data-category="Biryani">🍚 Biryani</button>
-        <button data-category="Healthy">🥗 Healthy</button>
-        <button data-category="Desserts">🍰 Desserts</button>
+        <button class="active" data-category="All" type="button">🍽️ All food</button>
+        <button data-category="South Indian" type="button">🥘 South Indian</button>
+        <button data-category="Burgers" type="button">🍔 Burgers</button>
+        <button data-category="Pizza" type="button">🍕 Pizza</button>
+        <button data-category="Biryani" type="button">🍚 Biryani</button>
+        <button data-category="Healthy" type="button">🥗 Healthy</button>
+        <button data-category="Desserts" type="button">🍰 Desserts</button>
       </div>
 
       <div id="restaurant-grid" class="restaurant-grid"></div>
 
       <div id="empty-state" class="empty-state hidden">
         <h3>No restaurants found</h3>
-        <button id="reset-search">Show all restaurants</button>
+        <p>Try a different search or category.</p>
+        <button id="reset-search" type="button">Show all restaurants</button>
       </div>
     </section>
 
+    <!-- FEATURES -->
     <section class="features">
       <span class="eyebrow">MORE REASONS TO CRAVE</span>
       <h2>Little things, big difference.</h2>
       <div class="feature-grid">
-        <article><span>💚</span><h3>Favourites</h3><p>Save your favourite restaurants.</p></article>
+        <article><span>💚</span><h3>Favourites</h3><p>Save favourite restaurants.</p></article>
         <article><span>🔎</span><h3>Quick search</h3><p>Find restaurants and dishes.</p></article>
-        <article><span>🧾</span><h3>Clear pricing</h3><p>View delivery charges and totals.</p></article>
-        <article><span>📱</span><h3>Mobile friendly</h3><p>Order using a responsive interface.</p></article>
+        <article><span>🧾</span><h3>Clear pricing</h3><p>See delivery fees and totals.</p></article>
+        <article><span>📱</span><h3>Mobile friendly</h3><p>Use the site on your phone.</p></article>
       </div>
     </section>
 
+    <!-- CLICKABLE THREE STEPS -->
     <section class="how" id="how-it-works">
       <h2>Three steps to happy taste buds.</h2>
+
       <div class="steps">
-        <article><span>🔎</span><h3>Pick your place</h3><p>Explore restaurants and menus.</p></article>
-        <article><span>🥡</span><h3>Build your order</h3><p>Add dishes to your shopping bag.</p></article>
-        <article><span>🛵</span><h3>Enjoy the moment</h3><p>Place your demo order.</p></article>
+        <article class="step-card" id="pick-place"
+                 tabindex="0" role="button">
+          <span class="step-icon">🔎</span>
+          <h3>Pick your place</h3>
+          <p>Explore restaurants and menus.</p>
+          <button class="step-button" type="button">
+            Explore restaurants →
+          </button>
+        </article>
+
+        <article class="step-card" id="build-order"
+                 tabindex="0" role="button">
+          <span class="step-icon">🥡</span>
+          <h3>Build your order</h3>
+          <p>Add dishes to your shopping bag.</p>
+          <button class="step-button" type="button">
+            Choose your food →
+          </button>
+        </article>
+
+        <article class="step-card" id="enjoy-moment"
+                 tabindex="0" role="button">
+          <span class="step-icon">🛵</span>
+          <h3>Enjoy the moment</h3>
+          <p>Place your order and enjoy!</p>
+          <button class="step-button" type="button">
+            View your order →
+          </button>
+        </article>
       </div>
     </section>
 
@@ -142,35 +179,50 @@
     </footer>
   </div>
 
-  <!-- CART -->
+  <!-- CART DRAWER -->
   <div id="overlay" class="overlay hidden"></div>
+
   <aside id="cart-drawer" class="cart-drawer">
-    <button id="close-cart" class="close-btn">✕</button>
+    <button id="close-cart" class="close-btn" type="button">✕</button>
     <h2>Your bag</h2>
     <p id="cart-restaurant"></p>
     <div id="cart-items"></div>
-    <div id="cart-empty"><p>Your bag is waiting. Add some food!</p></div>
+
+    <div id="cart-empty">
+      <p>Your bag is waiting. Add some food!</p>
+      <button id="browse-food" class="primary-btn" type="button">
+        Browse food ↗
+      </button>
+    </div>
+
     <div id="cart-footer" class="hidden">
       <p>Subtotal: <strong id="subtotal">₹0</strong></p>
       <p>Delivery: <strong id="delivery-fee">₹0</strong></p>
       <h3>Total: <strong id="total">₹0</strong></h3>
-      <button id="checkout-button" class="primary-btn full">Continue to checkout →</button>
+      <button id="checkout-button" class="primary-btn full" type="button">
+        Continue to checkout →
+      </button>
+      <p class="small-note">Demo checkout — no payment collected.</p>
     </div>
   </aside>
 
-  <!-- RESTAURANT MENU -->
-  <div id="restaurant-modal" class="modal hidden">
-    <button id="close-restaurant" class="close-btn">✕</button>
+  <!-- MENU MODAL -->
+  <div id="restaurant-modal" class="modal hidden"
+       role="dialog" aria-modal="true">
+    <button id="close-restaurant" class="close-btn" type="button">✕</button>
     <h2 id="modal-title"></h2>
     <p id="modal-meta"></p>
     <h3>Our menu</h3>
     <div id="menu-grid" class="menu-grid"></div>
   </div>
 
-  <!-- CHECKOUT -->
-  <div id="checkout-modal" class="modal hidden">
-    <button id="close-checkout" class="close-btn">✕</button>
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal" class="modal hidden"
+       role="dialog" aria-modal="true">
+    <button id="close-checkout" class="close-btn" type="button">✕</button>
     <h2>Delivery details</h2>
+    <p>Where should we bring your order?</p>
+
     <form id="checkout-form">
       <label for="customer-name">Full name</label>
       <input id="customer-name" name="name" required placeholder="Your name">
@@ -180,18 +232,19 @@
              pattern="[0-9+ ()-]{8,}" placeholder="Your phone number">
 
       <label for="customer-address">Delivery address</label>
-      <textarea id="customer-address" name="address" required
-                placeholder="Your complete address"></textarea>
+      <textarea id="customer-address" name="address"
+                required placeholder="Your complete address"></textarea>
 
       <label for="customer-note">Order note (optional)</label>
-      <input id="customer-note" name="note" placeholder="Less spicy, extra chutney...">
+      <input id="customer-note" name="note"
+             placeholder="Less spicy, extra chutney...">
 
       <h3>Amount: <span id="checkout-total">₹0</span></h3>
       <button type="submit" class="primary-btn full">Place demo order</button>
     </form>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast hidden" role="status"></div>
   <script src="app.js"></script>
 </body>
 </html>
