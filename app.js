@@ -7,7 +7,6 @@ const restaurants = [
     rating: 4.9,
     time: "20–30 min",
     fee: 20,
-    tag: "LOCAL FAVOURITE",
     image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80",
     menu: [
       {id:"m1",name:"Mini Idli Sambar",price:99,emoji:"🥘",description:"Soft idlis with warm sambar"},
@@ -23,10 +22,9 @@ const restaurants = [
     rating: 4.8,
     time: "25–35 min",
     fee: 30,
-    tag: "BESTSELLER",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
     menu: [
-      {id:"b1",name:"Classic Smash Burger",price:229,emoji:"🍔",description:"Burger with cheese and house sauce"},
+      {id:"b1",name:"Classic Smash Burger",price:229,emoji:"🍔",description:"Cheese burger with house sauce"},
       {id:"b2",name:"Crispy Chicken Burger",price:249,emoji:"🍗",description:"Crispy chicken and spicy mayo"},
       {id:"b3",name:"Loaded Fries",price:129,emoji:"🍟",description:"Fries with cheese and herbs"},
       {id:"b4",name:"Chocolate Shake",price:119,emoji:"🥤",description:"Creamy chocolate milkshake"}
@@ -39,7 +37,6 @@ const restaurants = [
     rating: 4.7,
     time: "30–40 min",
     fee: 25,
-    tag: "OVEN FRESH",
     image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=80",
     menu: [
       {id:"p1",name:"Margherita Pizza",price:279,emoji:"🍕",description:"Tomato, mozzarella and basil"},
@@ -55,7 +52,6 @@ const restaurants = [
     rating: 4.8,
     time: "30–40 min",
     fee: 30,
-    tag: "HEARTY BITES",
     image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80",
     menu: [
       {id:"r1",name:"Chicken Dum Biryani",price:249,emoji:"🍚",description:"Fragrant basmati and chicken"},
@@ -71,7 +67,6 @@ const restaurants = [
     rating: 4.8,
     time: "20–30 min",
     fee: 20,
-    tag: "FRESH PICK",
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
     menu: [
       {id:"g1",name:"Rainbow Buddha Bowl",price:249,emoji:"🥗",description:"Greens, grains and chickpeas"},
@@ -87,7 +82,6 @@ const restaurants = [
     rating: 4.9,
     time: "20–30 min",
     fee: 20,
-    tag: "SWEET SPOT",
     image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80",
     menu: [
       {id:"s1",name:"Strawberry Cake",price:179,emoji:"🍰",description:"Sponge cake, cream and berries"},
@@ -106,11 +100,12 @@ let customerName = "Foodie";
 let toastTimer;
 
 const $ = id => document.getElementById(id);
-const money = amount => "₹" + amount.toLocaleString("en-IN");
+const money = n => "₹" + n.toLocaleString("en-IN");
 
-// DEMO LOGIN
+// LOGIN — DEMO ONLY
 function signIn(name) {
   customerName = name.trim() || "Foodie";
+
   $("welcome-name").textContent = customerName.split(" ")[0];
   $("profile-label").textContent = customerName.split(" ")[0];
 
@@ -123,12 +118,10 @@ function signIn(name) {
 
 $("google-login").addEventListener("click", () => {
   const name = prompt(
-    "Demo Google sign-in: enter the name you want to use."
+    "Demo Google sign-in: enter your display name."
   );
 
-  if (name && name.trim()) {
-    signIn(name);
-  }
+  if (name && name.trim()) signIn(name);
 });
 
 $("phone-form").addEventListener("submit", event => {
@@ -137,36 +130,31 @@ $("phone-form").addEventListener("submit", event => {
   const phone = $("phone").value.trim();
 
   if (!/^\d{10}$/.test(phone)) {
-    alert("Please enter a valid 10-digit phone number.");
+    alert("Enter a valid 10-digit phone number.");
     return;
   }
 
   const name = prompt("Enter your name to continue.");
 
-  if (name && name.trim()) {
-    signIn(name);
-  }
+  if (name && name.trim()) signIn(name);
 });
 
 $("profile-button").addEventListener("click", () => {
-  if (confirm("Sign out of this demo session?")) {
-    cart = [];
-    renderCart();
+  if (!confirm("Sign out of this demo session?")) return;
 
-    $("app").classList.add("hidden");
-    $("login-screen").classList.remove("hidden");
-    $("phone").value = "";
+  cart = [];
+  renderCart();
+  closeCart();
+  closeModals();
 
-    closeModals();
-    closeCart();
-  }
+  $("app").classList.add("hidden");
+  $("login-screen").classList.remove("hidden");
+  $("phone").value = "";
 });
 
-// SEARCH AND RESTAURANT CARDS
+// RESTAURANT LIST
 function renderRestaurants() {
-  const search = $("search-input").value
-    .trim()
-    .toLowerCase();
+  const query = $("search-input").value.trim().toLowerCase();
 
   const filtered = restaurants.filter(restaurant => {
     const categoryMatch =
@@ -178,17 +166,23 @@ function renderRestaurants() {
       ...restaurant.menu.map(dish => dish.name)
     ].join(" ").toLowerCase();
 
-    return categoryMatch && searchable.includes(search);
+    return categoryMatch && searchable.includes(query);
   });
 
   $("restaurant-grid").innerHTML = filtered.map(r => `
     <article class="restaurant-card"
-      data-restaurant="${r.id}" tabindex="0" role="button">
+      data-restaurant="${r.id}"
+      tabindex="0" role="button"
+      aria-label="Open ${r.name} menu">
+
       <div class="restaurant-photo"
         style="background-image:url('${r.image}')">
-        <span class="photo-tag">${r.tag}</span>
+
+        <span class="photo-tag">POPULAR CHOICE</span>
+
         <button class="heart-btn ${favorites.has(r.id) ? "saved" : ""}"
-          data-favorite="${r.id}" aria-label="Save ${r.name}">
+          data-favorite="${r.id}"
+          aria-label="Favourite ${r.name}">
           ${favorites.has(r.id) ? "♥" : "♡"}
         </button>
       </div>
@@ -198,7 +192,9 @@ function renderRestaurants() {
           <h3>${r.name}</h3>
           <span class="rating">★ ${r.rating}</span>
         </div>
+
         <p>${r.cuisine} · ${r.time}</p>
+
         <div class="card-meta">
           <span>Delivery</span>
           <strong>${money(r.fee)}</strong>
@@ -215,6 +211,7 @@ function renderRestaurants() {
 
 $("search-input").addEventListener("input", renderRestaurants);
 
+// CATEGORY FILTERS
 $("filters").addEventListener("click", event => {
   const button = event.target.closest("[data-category]");
   if (!button) return;
@@ -247,6 +244,7 @@ function openRestaurant(id) {
   if (!selectedRestaurant) return;
 
   $("modal-title").textContent = selectedRestaurant.name;
+
   $("modal-meta").textContent =
     `★ ${selectedRestaurant.rating} · ${selectedRestaurant.time}` +
     ` · Delivery ${money(selectedRestaurant.fee)}`;
@@ -256,7 +254,9 @@ function openRestaurant(id) {
       <h4>${dish.emoji} ${dish.name}</h4>
       <p>${dish.description}</p>
       <strong>${money(dish.price)}</strong>
-      <button class="add-btn" data-add="${dish.id}">+ Add</button>
+      <button class="add-btn" data-add="${dish.id}" type="button">
+        + Add
+      </button>
     </article>
   `).join("");
 
@@ -277,7 +277,7 @@ function toggleFavorite(id) {
   renderRestaurants();
 }
 
-// CART
+// ADD FOOD TO CART
 function addToCart(dishId) {
   if (!selectedRestaurant) return;
 
@@ -287,16 +287,17 @@ function addToCart(dishId) {
 
   if (!dish) return;
 
+  // One restaurant per order
   if (
     cart.length &&
     cart[0].restaurantId !== selectedRestaurant.id
   ) {
-    const confirmed = confirm(
-      `Your cart has items from ${cart[0].restaurantName}. ` +
+    const confirmChange = confirm(
+      `Your cart contains food from ${cart[0].restaurantName}. ` +
       `Clear it and order from ${selectedRestaurant.name}?`
     );
 
-    if (!confirmed) return;
+    if (!confirmChange) return;
     cart = [];
   }
 
@@ -318,6 +319,7 @@ function addToCart(dishId) {
   showToast(dish.name + " added to cart");
 }
 
+// UPDATE CART AND PRICE
 function renderCart() {
   const count = cart.reduce(
     (sum, item) => sum + item.qty, 0
@@ -328,9 +330,9 @@ function renderCart() {
   );
 
   const delivery = cart.length ? cart[0].fee : 0;
-  const total = subtotal + delivery;
 
   $("cart-count").textContent = count;
+
   $("cart-restaurant").textContent = cart.length
     ? "Ordering from " + cart[0].restaurantName
     : "";
@@ -343,9 +345,9 @@ function renderCart() {
       </div>
 
       <div class="qty">
-        <button data-qty="-1" data-id="${item.id}">−</button>
+        <button data-qty="-1" data-id="${item.id}" type="button">−</button>
         <span>${item.qty}</span>
-        <button data-qty="1" data-id="${item.id}">+</button>
+        <button data-qty="1" data-id="${item.id}" type="button">+</button>
       </div>
     </div>
   `).join("");
@@ -355,11 +357,11 @@ function renderCart() {
 
   $("subtotal").textContent = money(subtotal);
   $("delivery-fee").textContent = money(delivery);
-  $("total").textContent = money(total);
-  $("checkout-total").textContent = money(total);
+  $("total").textContent = money(subtotal + delivery);
+  $("checkout-total").textContent = money(subtotal + delivery);
 }
 
-// BUTTON EVENTS
+// HANDLE RESTAURANT, FAVOURITE AND CART BUTTONS
 document.addEventListener("click", event => {
   const favoriteButton = event.target.closest("[data-favorite]");
 
@@ -402,7 +404,7 @@ document.addEventListener("click", event => {
   }
 });
 
-// CART DRAWER
+// OPEN AND CLOSE CART
 function showOverlay() {
   $("overlay").classList.remove("hidden");
 }
@@ -437,7 +439,7 @@ function hideOverlayIfClosed() {
 $("open-cart").addEventListener("click", openCart);
 $("close-cart").addEventListener("click", closeCart);
 
-$("browse-food")?.addEventListener("click", () => {
+$("browse-food").addEventListener("click", () => {
   closeCart();
   $("restaurants").scrollIntoView({ behavior: "smooth" });
 });
@@ -461,13 +463,16 @@ $("checkout-button").addEventListener("click", () => {
 
 $("checkout-form").addEventListener("submit", event => {
   event.preventDefault();
+
   if (!cart.length) return;
 
-  const data = new FormData(event.target);
-  const name = data.get("name");
-  const orderId = "CR" + Math.floor(10000 + Math.random() * 90000);
+  const form = new FormData(event.target);
+  const name = form.get("name");
+  const orderId = "CR" +
+    Math.floor(10000 + Math.random() * 90000);
+
   const restaurant = cart[0].restaurantName;
-  const amount = $("checkout-total").textContent;
+  const total = $("checkout-total").textContent;
 
   closeModals();
 
@@ -475,7 +480,7 @@ $("checkout-form").addEventListener("submit", event => {
     `Thank you, ${name}!\n\n` +
     `Demo order: ${orderId}\n` +
     `Restaurant: ${restaurant}\n` +
-    `Total: ${amount}\n\n` +
+    `Total: ${total}\n\n` +
     `No real order or payment was sent.`
   );
 
@@ -485,7 +490,71 @@ $("checkout-form").addEventListener("submit", event => {
   showToast("Demo order " + orderId + " completed");
 });
 
-// KEYBOARD SUPPORT
+// WORKING THREE STEPS
+function goToSection(id) {
+  const section = $(id);
+
+  if (!section) {
+    alert("Section not found: " + id);
+    return;
+  }
+
+  section.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+// Step 1: scroll to restaurants
+$("pick-place").addEventListener("click", () => {
+  goToSection("restaurants");
+});
+
+// Step 2: scroll to restaurants and focus search
+$("build-order").addEventListener("click", () => {
+  goToSection("restaurants");
+
+  setTimeout(() => {
+    $("search-input").focus({ preventScroll: true });
+  }, 400);
+});
+
+// Step 3: open cart
+$("enjoy-moment").addEventListener("click", openCart);
+
+// Buttons inside the step cards
+document.querySelectorAll(".step-button").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+    button.closest(".step-card").click();
+  });
+});
+
+// Keyboard accessibility
+document.querySelectorAll(".step-card").forEach(card => {
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      card.click();
+    }
+  });
+});
+
+// TOAST NOTIFICATION
+function showToast(message) {
+  const toast = $("toast");
+
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    toast.classList.add("hidden");
+  }, 2200);
+}
+
+// ESCAPE KEY
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     closeCart();
@@ -500,18 +569,7 @@ document.addEventListener("keydown", event => {
   }
 });
 
-// NOTIFICATION
-function showToast(message) {
-  const toast = $("toast");
-  toast.textContent = message;
-  toast.classList.remove("hidden");
-
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.classList.add("hidden");
-  }, 2200);
-}
-
-// INITIAL SETUP
+// START WEBSITE
 renderRestaurants();
 renderCart();
+    
