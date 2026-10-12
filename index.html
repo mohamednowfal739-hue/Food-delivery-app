@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fbf7f0" />
+  <title>Crave — Food delivered with love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Crave home"><span class="brand-mark">c</span><span>crave<span class="brand-dot">.</span></span></a>
+    <nav class="nav-links"><a href="#restaurants">Restaurants</a><a href="#how-it-works">How it works</a></nav>
+    <button class="cart-pill" id="open-cart" aria-label="Open shopping cart">🛍️ <span>Cart</span><b id="cart-count">0</b></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="pulse"></span> GOOD FOOD, GOOD MOOD</span>
+        <h1>Your next<br>favourite meal<br>is <em>right here.</em></h1>
+        <p>Local favourites, made fresh and delivered to your door. Your cravings, taken care of.</p>
+        <a class="primary-btn" href="#restaurants">Explore restaurants <span>↗</span></a>
+        <div class="hero-proof"><div class="avatar-stack"><span>👩🏽</span><span>👨🏻</span><span>👩🏼</span></div><div><strong>Loved by foodies</strong><small>Fresh picks, happy bites</small></div><div class="proof-divider"></div><div><strong>4.8/5 <span class="stars">★★★★★</span></strong><small>Average customer rating</small></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-circle"></div>
+        <div class="hero-image" role="img" aria-label="Delicious burger and fries"></div>
+        <div class="floating-note note-top"><span class="note-icon">⚡</span><div><strong>Fast delivery</strong><small>From 25 minutes</small></div></div>
+        <div class="floating-note note-bottom"><span class="note-icon heart">♥</span><div><strong>Made with love</strong><small>Fresh, every time</small></div></div>
+        <span class="sparkle sparkle-one">✳</span><span class="sparkle sparkle-two">✦</span>
+      </div>
+    </section>
+
+    <section class="search-section" id="restaurants">
+      <div><span class="section-kicker">FIND YOUR FLAVOUR</span><h2>What are you craving?</h2></div>
+      <div class="search-wrap"><span>⌕</span><input id="search-input" type="search" placeholder="Search restaurants or dishes..." aria-label="Search restaurants or dishes"><kbd>⌘ K</kbd></div>
+    </section>
+    <div class="category-row" id="category-row">
+      <button class="category active" data-category="All"><span>🍽️</span> All food</button>
+      <button class="category" data-category="South Indian"><span>🥘</span> South Indian</button>
+      <button class="category" data-category="Burgers"><span>🍔</span> Burgers</button>
+      <button class="category" data-category="Pizza"><span>🍕</span> Pizza</button>
+      <button class="category" data-category="Healthy"><span>🥗</span> Healthy</button>
+      <button class="category" data-category="Desserts"><span>🍰</span> Desserts</button>
+    </div>
+
+    <section class="restaurant-section">
+      <div class="section-heading"><div><span class="section-kicker">HANDPICKED FOR YOU</span><h2>Restaurants near you</h2></div><span class="results-count" id="results-count">6 places to explore</span></div>
+      <div class="restaurant-grid" id="restaurant-grid"></div>
+      <div class="empty-state hidden" id="empty-state"><span>🍽️</span><h3>No bites found</h3><p>Try another search or category.</p><button class="secondary-btn" id="reset-search">Show all restaurants</button></div>
+    </section>
+
+    <section class="how-section" id="how-it-works">
+      <div class="how-intro"><span class="section-kicker">GOOD FOOD, MADE EASY</span><h2>Three steps to<br><em>happy taste buds.</em></h2><p>From choosing your favourite spot to that first delicious bite, we keep it simple.</p></div>
+      <div class="steps">
+        <article class="step"><span class="step-number">01</span><div class="step-emoji">🔎</div><h3>Pick your place</h3><p>Browse local restaurants and find something you love.</p></article>
+        <article class="step"><span class="step-number">02</span><div class="step-emoji">🥡</div><h3>Build your order</h3><p>Choose your dishes, add them to your bag, and check out.</p></article>
+        <article class="step"><span class="step-number">03</span><div class="step-emoji">🛵</div><h3>Enjoy the moment</h3><p>Get comfy. Your next favourite meal is on its way.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">c</span><span>crave<span class="brand-dot">.</span></span></a><p>Made for your cravings. © 2026 Crave.</p><a href="#restaurants">Back to the good stuff ↑</a></footer>
+
+  <div class="overlay hidden" id="overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-header"><div><span class="section-kicker">YOUR ORDER</span><h2>Your bag <span id="drawer-count">(0)</span></h2></div><button class="icon-btn" id="close-cart" aria-label="Close cart">✕</button></div>
+    <div class="cart-restaurant" id="cart-restaurant"></div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-empty" id="cart-empty"><span>🛍️</span><h3>Your bag is waiting</h3><p>Add a delicious dish to get started.</p><button class="primary-btn" id="browse-food">Browse food ↗</button></div>
+    <div class="cart-footer hidden" id="cart-footer">
+      <div class="bill-line"><span>Subtotal</span><strong id="subtotal">₹0</strong></div>
+      <div class="bill-line"><span>Delivery fee</span><strong id="delivery-fee">₹30</strong></div>
+      <div class="bill-line total"><span>Total</span><strong id="total">₹0</strong></div>
+      <button class="primary-btn checkout-btn" id="checkout-button">Continue to checkout <span>→</span></button>
+      <small class="secure-note">🔒 Demo checkout · no payment is collected</small>
+    </div>
+  </aside>
+
+  <div class="modal hidden" id="restaurant-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="icon-btn modal-close" id="close-restaurant" aria-label="Close restaurant">✕</button>
+    <div class="modal-hero" id="modal-hero"></div>
+    <div class="modal-content"><div class="modal-heading"><div><span class="section-kicker" id="modal-cuisine"></span><h2 id="modal-title"></h2><p id="modal-meta"></p></div><span class="rating-badge" id="modal-rating"></span></div><p class="menu-label">THE MENU <span>· Made fresh to order</span></p><div class="menu-grid" id="menu-grid"></div></div>
+  </div>
+
+  <div class="modal checkout-modal hidden" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <button class="icon-btn modal-close" id="close-checkout" aria-label="Close checkout">✕</button>
+    <div class="checkout-content"><span class="section-kicker">ALMOST THERE</span><h2 id="checkout-title">Delivery details</h2><p>Where should we bring your delicious order?</p>
+      <form id="checkout-form">
+        <label for="customer-name">Full name</label><input id="customer-name" name="name" required placeholder="Your name">
+        <label for="customer-phone">Phone number</label><input id="customer-phone" name="phone" required inputmode="tel" pattern="[0-9+ ()-]{8,}" placeholder="Your contact number">
+        <label for="customer-address">Delivery address</label><textarea id="customer-address" name="address" required rows="3" placeholder="House / flat, street, area, city"></textarea>
+        <label for="customer-note">Order note <span>(optional)</span></label><input id="customer-note" name="note" placeholder="Less spicy, extra chutney...">
+        <div class="checkout-total"><span>Amount due (demo)</span><strong id="checkout-total">₹0</strong></div>
+        <button class="primary-btn checkout-btn" type="submit">Place demo order <span>→</span></button>
+        <small class="secure-note">This prototype does not send orders to a real restaurant.</small>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
